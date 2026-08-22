@@ -40,6 +40,8 @@ body{
   cursor:none;
 }
 
+body.locked{ overflow:hidden; height:100vh; }
+
 @media (max-width: 900px){
   body{cursor:auto;}
 }
@@ -459,9 +461,73 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration: 0.001ms !important; animation-iteration-count:1 !important; transition-duration: 0.001ms !important; scroll-behavior:auto !important; }
 }
+
+/* ---------- BIRTHDAY LOCK / COUNTDOWN ---------- */
+#birthday-lock{
+  position:fixed; inset:0; z-index:99999;
+  background: linear-gradient(160deg, var(--ivory) 0%, var(--blush-soft) 60%, var(--lavender) 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:8vw;
+  transition: opacity 1s var(--ease), visibility 1s var(--ease);
+}
+#birthday-lock.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+.lock-flower{ width:70px; height:70px; margin-bottom:20px; }
+.lock-flower ellipse{ fill: var(--rose-gold); opacity:0.85; }
+.lock-eyebrow{
+  font-size:0.75rem; letter-spacing:0.3em; text-transform:uppercase;
+  color:var(--rose-gold-deep); opacity:0.85; margin-bottom:16px;
+}
+.lock-title{
+  font-family:'Playfair Display', serif; font-style:italic; font-weight:600;
+  font-size: clamp(1.6rem, 5vw, 2.6rem); color:var(--plum); max-width:600px; line-height:1.4;
+}
+.lock-sub{
+  margin-top:14px; font-size:1rem; font-weight:300; color:var(--plum-soft); max-width:440px;
+}
+.lock-countdown{
+  display:flex; gap:18px; margin-top:38px;
+}
+.lock-unit{
+  display:flex; flex-direction:column; align-items:center;
+  background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.7);
+  border-radius:18px; padding:16px 14px; min-width:64px;
+  box-shadow: var(--shadow-card);
+}
+.lock-unit .num{
+  font-family:'Playfair Display', serif; font-size:1.7rem; font-weight:600; color:var(--rose-gold-deep);
+}
+.lock-unit .label{
+  font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--plum-soft); margin-top:4px;
+}
+@media (max-width:480px){
+  .lock-countdown{ gap:10px; }
+  .lock-unit{ min-width:52px; padding:12px 10px; }
+  .lock-unit .num{ font-size:1.3rem; }
+}
 </style>
 </head>
 <body>
+
+<div id="birthday-lock">
+  <svg class="lock-flower" viewBox="0 0 120 120">
+    <ellipse cx="60" cy="30" rx="14" ry="26"/>
+    <ellipse cx="60" cy="30" rx="14" ry="26" transform="rotate(60 60 60)"/>
+    <ellipse cx="60" cy="30" rx="14" ry="26" transform="rotate(120 60 60)"/>
+    <ellipse cx="60" cy="30" rx="14" ry="26" transform="rotate(180 60 60)"/>
+    <ellipse cx="60" cy="30" rx="14" ry="26" transform="rotate(240 60 60)"/>
+    <ellipse cx="60" cy="30" rx="14" ry="26" transform="rotate(300 60 60)"/>
+    <circle cx="60" cy="60" r="10" fill="#C9A25D"/>
+  </svg>
+  <span class="lock-eyebrow">something's coming</span>
+  <h1 class="lock-title">A little surprise is waiting for you, Sruthiii 🌸</h1>
+  <p class="lock-sub">Come back on your birthday to open it.</p>
+  <div class="lock-countdown" id="lockCountdown">
+    <div class="lock-unit"><span class="num" id="cdDays">--</span><span class="label">days</span></div>
+    <div class="lock-unit"><span class="num" id="cdHours">--</span><span class="label">hrs</span></div>
+    <div class="lock-unit"><span class="num" id="cdMins">--</span><span class="label">min</span></div>
+    <div class="lock-unit"><span class="num" id="cdSecs">--</span><span class="label">sec</span></div>
+  </div>
+</div>
 
 <div id="loader">
   <svg class="loader-flower" viewBox="0 0 120 120">
@@ -778,6 +844,37 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
 </audio>
 
 <script>
+/* ---------------- BIRTHDAY LOCK / COUNTDOWN ---------------- */
+// Unlocks at local midnight on Aug 25. Update the year below if reusing this page later.
+const UNLOCK_DATE = new Date(2026, 7, 25, 0, 0, 0); // month is 0-indexed: 7 = August
+
+document.body.classList.add('locked');
+
+function updateCountdown(){
+  const now = new Date();
+  const diff = UNLOCK_DATE - now;
+
+  if (diff <= 0){
+    document.getElementById('birthday-lock').classList.add('hidden');
+    document.body.classList.remove('locked');
+    clearInterval(countdownTimer);
+    return;
+  }
+
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff / (1000*60*60)) % 24);
+  const m = Math.floor((diff / (1000*60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('cdDays').textContent = d;
+  document.getElementById('cdHours').textContent = pad(h);
+  document.getElementById('cdMins').textContent = pad(m);
+  document.getElementById('cdSecs').textContent = pad(s);
+}
+updateCountdown();
+const countdownTimer = setInterval(updateCountdown, 1000);
+
 /* ---------------- LOADER ---------------- */
 window.addEventListener('load', () => {
   setTimeout(() => {
