@@ -382,6 +382,30 @@ section{
 }
 .friendship-text{ max-width:600px; margin:0 auto; font-size:1.12rem; font-weight:300; line-height:1.9; color:var(--plum-soft); }
 
+/* ---------- MEMORIES GALLERY ---------- */
+#memories{ text-align:center; }
+.memories-grid{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:26px; margin-top:44px;
+}
+@media (max-width:700px){ .memories-grid{ grid-template-columns:1fr; } }
+.memory-frame{
+  position:relative; border-radius:22px; overflow:hidden;
+  box-shadow: var(--shadow-card);
+  border: 6px solid rgba(255,255,255,0.75);
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+.memory-frame:hover{ transform: translateY(-8px) rotate(-0.5deg); box-shadow: 0 30px 55px -15px rgba(74,46,66,0.3); }
+.memory-frame img, .memory-frame video{
+  width:100%; height:100%; display:block; object-fit:cover; aspect-ratio:4/3;
+}
+.memory-caption{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:18px 16px 14px;
+  background: linear-gradient(0deg, rgba(74,46,66,0.65), transparent);
+  color:#fff; font-family:'Playfair Display', serif; font-style:italic; font-size:1rem; text-align:left;
+}
+.memories-text{ max-width:600px; margin: 34px auto 0; font-size:1.1rem; font-weight:300; line-height:1.85; color:var(--plum-soft); }
+
 /* ---------- FAMILY ---------- */
 #family{
   background: radial-gradient(circle at 20% 20%, rgba(243,203,214,0.25), transparent 45%),
@@ -470,6 +494,7 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
     <li><a href="#appreciation">You</a></li>
     <li><a href="#dreams">Dreams</a></li>
     <li><a href="#friendship">Friendship</a></li>
+    <li><a href="#memories">Memories</a></li>
     <li><a href="#wishes">Wishes</a></li>
   </ul>
   <div class="nav-right">
@@ -497,7 +522,7 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
   <h1 class="hero-title reveal in-view">Happy Birthday
     <span class="name-script">Sruthiii</span>
   </h1>
-  <p class="hero-subtitle reveal in-view" style="transition-delay:.3s;">Today is all about celebrating someone truly wonderful. 🌸</p>
+  <p class="hero-subtitle reveal in-view" style="transition-delay:.3s;">Today is all about celebrating my favorite person — my sweetest, closest friend. 🌸</p>
 
   <div class="gift-wrap reveal-zoom in-view idle-bounce" id="giftBox" style="transition-delay:.5s;" title="click to open your gift" tabindex="0" role="button" aria-label="Open your birthday gift">
     <svg viewBox="0 0 200 200">
@@ -559,8 +584,8 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
       <div class="eyebrow" style="display:block; text-align:center;">how it began</div>
       <h2 class="center-title">Our Story</h2>
       <div class="story-text">
-        <p class="reveal" style="transition-delay:.1s;">Who knew that those 21 days of bank training would give me such an amazing colleague and friend? 💼🤝</p>
-        <p class="reveal" style="transition-delay:.25s;">I am so grateful that our paths crossed during that time, and I'm so glad to have you in my professional life and beyond! 💫🌟</p>
+        <p class="reveal" style="transition-delay:.1s;">Who knew that those 21 days of training would give me one of the closest friends I've ever had? 🤍✨</p>
+        <p class="reveal" style="transition-delay:.25s;">It's funny how little time it actually took — we just clicked, and it's felt like forever ever since. I'm so grateful our paths crossed. 💫🌟</p>
       </div>
     </div>
   </div>
@@ -580,7 +605,7 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
     <div class="card-grid">
       <div class="icon-card reveal-zoom">
         <svg viewBox="0 0 64 64"><path d="M32 54s-22-13.5-22-29A13 13 0 0132 15a13 13 0 0122 10c0 15.5-22 29-22 29z" fill="#F8D2E2"/></svg>
-        <p>In the short time we've known each other, you've shown me exactly what kind of wonderful person you are. 💖</p>
+        <p>In the short time we've known each other, you've become one of the people I trust and love the most. 💖</p>
       </div>
       <div class="icon-card reveal-zoom" style="transition-delay:.15s;">
         <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="20" fill="#E7C77E"/><circle cx="32" cy="32" r="20" fill="none" stroke="#EBA4C3" stroke-width="2" opacity="0.4"/><path d="M20 34c3 6 9 9 12 9s9-3 12-9" stroke="#4A2E42" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="24" cy="26" r="2.5" fill="#4A2E42"/><circle cx="40" cy="26" r="2.5" fill="#4A2E42"/></svg>
@@ -667,7 +692,7 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
       <div class="heart-float" style="left:52%; top:30px; animation-delay:1.2s;">💛</div>
       <div class="heart-float" style="left:48%; top:50px; animation-delay:2.4s;">💛</div>
     </div>
-    <p class="friendship-text reveal">Through all the ups and downs of our banking journey, please know that I will always be there for you, both as a true friend and a supportive colleague. 👭💛✨</p>
+    <p class="friendship-text reveal">Through every up and down since the day we met, please know I will always be right here for you — as your person, your ride-or-die, no matter what. 👭💛✨</p>
   </div>
 </section>
 
@@ -675,7 +700,24 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
   <path d="M0,20 C 340,90 1080,0 1440,70 L1440,100 L0,100 Z" fill="rgba(243,203,214,0.28)"/>
 </svg>
 
-<!-- FAMILY -->
+<!-- MEMORIES -->
+<section id="memories">
+  <div class="section-inner">
+    <span class="eyebrow reveal">little moments</span>
+    <h2 class="center-title reveal">Memories Worth Keeping</h2>
+    <div class="memories-grid">
+      <div class="memory-frame reveal-zoom">
+        <video src="sruthi_video.mp4" autoplay muted loop playsinline></video>
+        <div class="memory-caption">just her, being her ✨</div>
+      </div>
+      <div class="memory-frame reveal-zoom" style="transition-delay:.15s;">
+        <img src="photo_new.jpg" alt="Sruthiii and friend smiling together">
+        <div class="memory-caption">that day, that laugh 🤍</div>
+      </div>
+    </div>
+    <p class="memories-text reveal">Just a couple of the moments I'm holding onto — here's to making so many more with you. 💫</p>
+  </div>
+</section>
 <section id="family">
   <div class="section-inner" style="text-align:center;">
     <span class="eyebrow reveal">what matters most</span>
@@ -713,7 +755,7 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
 
 <!-- FINAL -->
 <section id="final">
-  <p class="final-message reveal-zoom">"May your smile shine brighter every single year.<br>Happy Birthday once again, <span class="script" style="color:var(--rose-gold-deep);">Sruthiii</span>. 🌸💖✨"</p>
+  <p class="final-message reveal-zoom">"May your smile shine brighter every single year, and may you always know how loved you are.<br>Happy Birthday, my sweetest friend <span class="script" style="color:var(--rose-gold-deep);">Sruthiii</span>. 🌸💖✨"</p>
   <div class="bouquet-wrap reveal-zoom">
     <svg viewBox="0 0 220 220">
       <path d="M110 220 L110 130" stroke="#7A9E6B" stroke-width="4"/>
@@ -727,8 +769,8 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
 </section>
 
 <footer>
-  <p>Made with genuine friendship, warm wishes, and lots of smiles.</p>
-  <span class="script">— always cheering for you 💖</span>
+  <p>Made with so much love, for the sweetest friend I know.</p>
+  <span class="script">— always your person 💖</span>
 </footer>
 
 <audio id="bgm" loop preload="none">
