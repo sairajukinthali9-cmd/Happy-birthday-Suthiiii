@@ -132,6 +132,15 @@ nav.nav-hide{ transform: translateY(-100%); }
 .nav-links a:hover::after{ width:100%; }
 @media (max-width:760px){ .nav-links{ display:none; } }
 
+.nav-right{ display:flex; align-items:center; gap:10px; }
+.song-name{
+  font-size:0.68rem; letter-spacing:0.08em; color:var(--plum-soft);
+  opacity:0; max-width:0; overflow:hidden; white-space:nowrap;
+  transition: opacity .4s var(--ease), max-width .4s var(--ease), margin .4s var(--ease);
+}
+.song-name.show{ opacity:0.85; max-width:140px; margin-right:2px; }
+.song-name::before{ content:'♪ '; color:var(--gold); }
+
 #music-toggle{
   width:42px; height:42px; border-radius:50%;
   border:1px solid rgba(201,162,93,0.4);
@@ -455,7 +464,7 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
 <svg class="frame-corner br" viewBox="0 0 60 60"><path d="M4 4 Q4 30 30 30" stroke="#C9A25D" stroke-width="1.5" fill="none" opacity="0.7"/><circle cx="10" cy="10" r="5" fill="#F8D2E2"/><ellipse cx="10" cy="10" rx="9" ry="4" fill="#DCCFEC" opacity="0.7" transform="rotate(30 10 10)"/><ellipse cx="10" cy="10" rx="9" ry="4" fill="#DCCFEC" opacity="0.7" transform="rotate(-30 10 10)"/><circle cx="10" cy="10" r="3" fill="#D8709D"/></svg>
 
 <nav id="mainnav">
-  <div class="nav-logo">H.</div>
+  <div></div>
   <ul class="nav-links">
     <li><a href="#story">Story</a></li>
     <li><a href="#appreciation">You</a></li>
@@ -463,8 +472,11 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
     <li><a href="#friendship">Friendship</a></li>
     <li><a href="#wishes">Wishes</a></li>
   </ul>
-  <div id="music-toggle" title="Toggle music">
-    <svg id="music-icon-off" viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/></svg>
+  <div class="nav-right">
+    <span class="song-name" id="songName">Udi</span>
+    <div id="music-toggle" title="Toggle music">
+      <svg id="music-icon-off" viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/></svg>
+    </div>
   </div>
 </nav>
 
@@ -980,6 +992,7 @@ typeTargets.forEach(el => typeObserver.observe(el));
 const bgm = document.getElementById('bgm');
 const musicBtn = document.getElementById('music-toggle');
 const musicIcon = document.getElementById('music-icon-off');
+const songName = document.getElementById('songName');
 let playing = false;
 musicBtn.addEventListener('click', () => {
   if (!playing){
@@ -987,10 +1000,12 @@ musicBtn.addEventListener('click', () => {
     bgm.play().catch(()=>{});
     musicIcon.innerHTML = '<path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/><path d="M19 12a7 7 0 01-1 3.5l1.5 1a9 9 0 001-4.5A9 9 0 0018.9 6l-1.5 1A7 7 0 0119 12z" opacity="0.5"/>';
     playing = true;
+    songName.classList.add('show');
   } else {
     bgm.pause();
     musicIcon.innerHTML = '<path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>';
     playing = false;
+    songName.classList.remove('show');
   }
 });
 
