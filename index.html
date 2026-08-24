@@ -472,4 +472,610 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
 .burst-item{ position:fixed; pointer-events:none; z-index:9996; }
 
 @media (prefers-reduced-motion: reduce){
-  *{ animation-duration: 0.001ms !important; animation-iteration-count:
+  *{ animation-duration: 0.001ms !important; animation-iteration-count:1 !important; transition-duration: 0.001ms !important; scroll-behavior:auto !important; }
+}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <svg class="loader-flower" viewBox="0 0 120 120">
+    <ellipse class="loader-petal" cx="60" cy="30" rx="14" ry="26"/>
+    <ellipse class="loader-petal" cx="60" cy="30" rx="14" ry="26"/>
+    <ellipse class="loader-petal" cx="60" cy="30" rx="14" ry="26"/>
+    <ellipse class="loader-petal" cx="60" cy="30" rx="14" ry="26"/>
+    <ellipse class="loader-petal" cx="60" cy="30" rx="14" ry="26"/>
+    <ellipse class="loader-petal" cx="60" cy="30" rx="14" ry="26"/>
+    <circle cx="60" cy="60" r="10" fill="#C9A25D"/>
+  </svg>
+  <div class="loader-text">preparing something beautiful</div>
+</div>
+
+<div id="cursor-glow"></div>
+<div id="scroll-progress"></div>
+<canvas id="ambient-canvas"></canvas>
+<div id="petal-layer"></div>
+
+<div id="page-frame"></div>
+<svg class="frame-corner tl" viewBox="0 0 60 60"><path d="M4 4 Q4 30 30 30" stroke="#C9A25D" stroke-width="1.5" fill="none" opacity="0.7"/><circle cx="10" cy="10" r="5" fill="#F8D2E2"/><ellipse cx="10" cy="10" rx="9" ry="4" fill="#EBA4C3" opacity="0.6" transform="rotate(30 10 10)"/><ellipse cx="10" cy="10" rx="9" ry="4" fill="#EBA4C3" opacity="0.6" transform="rotate(-30 10 10)"/><circle cx="10" cy="10" r="3" fill="#C9A25D"/></svg>
+<svg class="frame-corner tr" viewBox="0 0 60 60"><path d="M4 4 Q4 30 30 30" stroke="#C9A25D" stroke-width="1.5" fill="none" opacity="0.7"/><circle cx="10" cy="10" r="5" fill="#DCCFEC"/><ellipse cx="10" cy="10" rx="9" ry="4" fill="#C9A25D" opacity="0.5" transform="rotate(30 10 10)"/><ellipse cx="10" cy="10" rx="9" ry="4" fill="#C9A25D" opacity="0.5" transform="rotate(-30 10 10)"/><circle cx="10" cy="10" r="3" fill="#D8709D"/></svg>
+<svg class="frame-corner bl" viewBox="0 0 60 60"><path d="M4 4 Q4 30 30 30" stroke="#C9A25D" stroke-width="1.5" fill="none" opacity="0.7"/><circle cx="10" cy="10" r="5" fill="#EBA4C3"/><ellipse cx="10" cy="10" rx="9" ry="4" fill="#F8D2E2" opacity="0.7" transform="rotate(30 10 10)"/><ellipse cx="10" cy="10" rx="9" ry="4" fill="#F8D2E2" opacity="0.7" transform="rotate(-30 10 10)"/><circle cx="10" cy="10" r="3" fill="#C9A25D"/></svg>
+<svg class="frame-corner br" viewBox="0 0 60 60"><path d="M4 4 Q4 30 30 30" stroke="#C9A25D" stroke-width="1.5" fill="none" opacity="0.7"/><circle cx="10" cy="10" r="5" fill="#F8D2E2"/><ellipse cx="10" cy="10" rx="9" ry="4" fill="#DCCFEC" opacity="0.7" transform="rotate(30 10 10)"/><ellipse cx="10" cy="10" rx="9" ry="4" fill="#DCCFEC" opacity="0.7" transform="rotate(-30 10 10)"/><circle cx="10" cy="10" r="3" fill="#D8709D"/></svg>
+
+<nav id="mainnav">
+  <div></div>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#appreciation">You</a></li>
+    <li><a href="#dreams">Dreams</a></li>
+    <li><a href="#friendship">Friendship</a></li>
+    <li><a href="#memories">Memories</a></li>
+    <li><a href="#wishes">Wishes</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="song-name" id="songName">Chiru Chiru</span>
+    <div id="music-toggle" title="Toggle music">
+      <svg id="music-icon-off" viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/></svg>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <svg class="hero-ribbon" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+    <path d="M -100 650 C 200 550, 300 750, 600 620 S 1000 480, 1300 600" stroke="url(#ribbonGrad)" stroke-width="2" fill="none" opacity="0.6"/>
+    <defs>
+      <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#C9A25D"/>
+        <stop offset="50%" stop-color="#F8D2E2"/>
+        <stop offset="100%" stop-color="#DCCFEC"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <span class="eyebrow reveal in-view">A little celebration, made just for you</span>
+  <h1 class="hero-title reveal in-view">Happy Birthday
+    <span class="name-script">Sruthiii</span>
+  </h1>
+  <p class="hero-subtitle reveal in-view" style="transition-delay:.3s;">Today is all about celebrating my favorite person — my sweetest, closest friend. 🌸</p>
+
+  <div class="hero-anim reveal-zoom in-view" style="transition-delay:.4s;">
+    <video src="animation.mp4" autoplay muted loop playsinline></video>
+  </div>
+
+  <div class="gift-wrap reveal-zoom in-view idle-bounce" id="giftBox" style="transition-delay:.5s;" title="click to open your gift" tabindex="0" role="button" aria-label="Open your birthday gift">
+    <svg viewBox="0 0 200 200">
+      <defs>
+        <linearGradient id="boxBody" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FDEBF3"/>
+          <stop offset="100%" stop-color="#F8D2E2"/>
+        </linearGradient>
+        <radialGradient id="giftGlowGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFF8EE" stop-opacity="0.95"/>
+          <stop offset="55%" stop-color="#E7C77E" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#E7C77E" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <ellipse cx="100" cy="178" rx="70" ry="10" fill="#EBA4C3" opacity="0.2"/>
+
+      <!-- soft golden glow, hidden until the gift is opened -->
+      <circle id="giftGlow" class="gift-glow" cx="100" cy="118" r="58" fill="url(#giftGlowGrad)"/>
+
+      <!-- box base -->
+      <rect x="45" y="110" width="110" height="70" rx="8" fill="url(#boxBody)"/>
+      <rect x="45" y="110" width="110" height="70" rx="8" fill="none" stroke="#EBA4C3" stroke-width="1" opacity="0.4"/>
+
+      <!-- vertical ribbon on the base -->
+      <rect class="gift-ribbon-v" x="92" y="110" width="16" height="70" fill="#C9A25D"/>
+
+      <!-- lid, rotates open on click -->
+      <g class="gift-lid" id="giftLid">
+        <rect x="38" y="92" width="124" height="24" rx="8" fill="#EBA4C3"/>
+        <rect class="gift-ribbon-h" x="38" y="98" width="124" height="12" fill="#C9A25D"/>
+        <g transform="translate(100,92)">
+          <ellipse class="gift-bow-l" cx="-14" cy="-4" rx="14" ry="10" fill="#D8709D"/>
+          <ellipse class="gift-bow-r" cx="14" cy="-4" rx="14" ry="10" fill="#D8709D"/>
+          <circle cx="0" cy="-4" r="7" fill="#C9A25D"/>
+        </g>
+      </g>
+    </svg>
+
+    <div class="gift-messages" id="giftMessages">
+      <div class="gift-msg-line" id="giftMsg1">For the sweetest birthday girl</div>
+      <div class="gift-msg-line" id="giftMsg2">You deserve all the happiness in the world</div>
+    </div>
+  </div>
+
+  <button class="celebrate-btn" id="celebrateBtn" type="button">Celebrate</button>
+
+  <div class="scroll-cue"><div class="line"></div></div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" style="height:80px;">
+  <path d="M0,40 C 360,100 1080,0 1440,60 L1440,100 L0,100 Z" fill="rgba(255,255,255,0.5)"/>
+</svg>
+
+<!-- STORY -->
+<section id="story">
+  <div class="section-inner">
+    <div class="glass-card reveal">
+      <div class="eyebrow" style="display:block; text-align:center;">how it began</div>
+      <h2 class="center-title">Our Story</h2>
+      <div class="story-text">
+        <p class="reveal" style="transition-delay:.1s;">Who knew that those 21 days of training would give me one of the closest friends I've ever had? 🤍✨</p>
+        <p class="reveal" style="transition-delay:.25s;">It's funny how little time it actually took — we just clicked, and it's felt like forever ever since. I'm so grateful our paths crossed. 💫🌟</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" style="height:70px;">
+  <path d="M0,60 C 400,0 1040,100 1440,30 L1440,100 L0,100 Z" fill="rgba(243,203,214,0.25)"/>
+</svg>
+
+<!-- APPRECIATION -->
+<section id="appreciation">
+  <div class="section-inner">
+    <div style="text-align:center;">
+      <span class="eyebrow reveal">who you are</span>
+      <h2 class="center-title reveal">Exactly The Kind Of Wonderful</h2>
+    </div>
+    <div class="card-grid">
+      <div class="icon-card reveal-zoom">
+        <svg viewBox="0 0 64 64"><path d="M32 54s-22-13.5-22-29A13 13 0 0132 15a13 13 0 0122 10c0 15.5-22 29-22 29z" fill="#F8D2E2"/></svg>
+        <p>In the short time we've known each other, you've become one of the people I trust and love the most. 💖</p>
+      </div>
+      <div class="icon-card reveal-zoom" style="transition-delay:.15s;">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="20" fill="#E7C77E"/><circle cx="32" cy="32" r="20" fill="none" stroke="#EBA4C3" stroke-width="2" opacity="0.4"/><path d="M20 34c3 6 9 9 12 9s9-3 12-9" stroke="#4A2E42" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="24" cy="26" r="2.5" fill="#4A2E42"/><circle cx="40" cy="26" r="2.5" fill="#4A2E42"/></svg>
+        <p>You are incredibly sweet and caring, always bringing such a positive energy to everything you do. 🤗✨</p>
+      </div>
+      <div class="icon-card reveal-zoom" style="transition-delay:.3s;">
+        <svg viewBox="0 0 64 64"><path d="M32 6l7 14 15 2-11 11 3 16-14-8-14 8 3-16-11-11 15-2z" fill="#C9A25D"/></svg>
+        <p>Alongside that warmth, you have this fierce strength and unwavering support that makes you so inspiring. 💪🎀</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" style="height:70px;">
+  <path d="M0,30 C 380,100 1100,0 1440,50 L1440,100 L0,100 Z" fill="rgba(220,207,236,0.3)"/>
+</svg>
+
+<!-- DREAMS -->
+<section id="dreams">
+  <svg class="coin" style="top:8%; left:6%;" width="42" height="42" viewBox="0 0 42 42"><circle cx="21" cy="21" r="19" fill="#E3C99B" stroke="#C9A25D" stroke-width="2"/><text x="21" y="27" font-size="18" text-anchor="middle" fill="#D8709D" font-family="Playfair Display">$</text></svg>
+  <svg class="coin" style="top:60%; right:8%; animation-delay:2s;" width="34" height="34" viewBox="0 0 42 42"><circle cx="21" cy="21" r="19" fill="#E3C99B" stroke="#C9A25D" stroke-width="2"/><text x="21" y="27" font-size="18" text-anchor="middle" fill="#D8709D" font-family="Playfair Display">$</text></svg>
+  <svg class="coin" style="top:20%; right:14%; animation-delay:4s;" width="26" height="26" viewBox="0 0 42 42"><circle cx="21" cy="21" r="19" fill="#E3C99B" stroke="#C9A25D" stroke-width="2"/><text x="21" y="27" font-size="18" text-anchor="middle" fill="#D8709D" font-family="Playfair Display">$</text></svg>
+
+  <div class="section-inner">
+    <div style="text-align:center;">
+      <span class="eyebrow reveal">your future</span>
+      <h2 class="center-title reveal">A Career In Full Bloom</h2>
+    </div>
+    <div class="dreams-text">
+      <p class="reveal">I know how driven you are to be a strong, successful professional in your banking career. 🚀📈</p>
+      <p class="reveal" style="transition-delay:.15s;">Seeing your dedication firsthand during our training, I have absolutely no doubt that you are going to achieve every single goal you set for yourself! 👑✨</p>
+      <p class="reveal" style="transition-delay:.3s;">You have the perfect mix of kindness, resilience, and ambition to go so far in this banking industry.</p>
+    </div>
+
+    <div class="growth-path-wrap reveal">
+      <svg viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet">
+        <path id="growthPath" class="growth-line" d="M20 220 C 150 220, 180 160, 260 150 S 400 90, 480 100 S 620 40, 700 45 S 830 15, 880 20"
+          stroke="#C9A25D" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- bloom badges along the path -->
+        <g class="bloom-badge" style="transition-delay:.3s;" transform="translate(260,150)">
+          <circle r="20" fill="#F8D2E2"/>
+          <circle r="20" fill="none" stroke="#C9A25D" stroke-width="1.5" opacity="0.6"/>
+          <path d="M0 -6 C -3 -10, -8 -6, -5 -1 C -2 3, 0 6, 0 6 C 0 6, 2 3, 5 -1 C 8 -6, 3 -10, 0 -6 Z" fill="#D8709D"/>
+        </g>
+        <g class="bloom-badge" style="transition-delay:.55s;" transform="translate(480,100)">
+          <circle r="24" fill="#E3C99B"/>
+          <circle r="24" fill="none" stroke="#C9A25D" stroke-width="1.5" opacity="0.6"/>
+          <path d="M0 8l3-9 9-1-7-6 2-9-7 5-7-5 2 9-7 6 9 1z" fill="#D8709D" transform="scale(0.8)"/>
+        </g>
+        <g class="bloom-badge" style="transition-delay:.8s;" transform="translate(700,45)">
+          <circle r="20" fill="#DCCFEC"/>
+          <circle r="20" fill="none" stroke="#C9A25D" stroke-width="1.5" opacity="0.6"/>
+          <path d="M0 -6 C -3 -10, -8 -6, -5 -1 C -2 3, 0 6, 0 6 C 0 6, 2 3, 5 -1 C 8 -6, 3 -10, 0 -6 Z" fill="#D8709D"/>
+        </g>
+        <g class="bloom-badge" style="transition-delay:1.05s;" transform="translate(880,20)">
+          <circle r="26" fill="#C9A25D"/>
+          <circle r="26" fill="none" stroke="#D8709D" stroke-width="1.5" opacity="0.5"/>
+          <text x="0" y="6" text-anchor="middle" font-size="20" fill="#FBF6EF">👑</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" style="height:70px;">
+  <path d="M0,60 C 420,0 1000,100 1440,20 L1440,100 L0,100 Z" fill="rgba(255,255,255,0.5)"/>
+</svg>
+
+<!-- FRIENDSHIP -->
+<section id="friendship">
+  <div class="section-inner">
+    <span class="eyebrow reveal">side by side</span>
+    <h2 class="center-title reveal">Through Every Step</h2>
+    <div class="avatars-wrap reveal-zoom">
+      <svg width="80" height="140" viewBox="0 0 80 140" style="left:35%; top:20px;">
+        <circle cx="40" cy="30" r="16" fill="#E7C77E"/>
+        <path d="M20 130 Q20 70 40 65 Q60 70 60 130 Z" fill="#EBA4C3"/>
+      </svg>
+      <svg width="80" height="140" viewBox="0 0 80 140" style="left:52%; top:20px;">
+        <circle cx="40" cy="30" r="16" fill="#DCCFEC"/>
+        <path d="M20 130 Q20 70 40 65 Q60 70 60 130 Z" fill="#D8709D"/>
+      </svg>
+      <div class="heart-float" style="left:44%; top:40px; animation-delay:0s;">💛</div>
+      <div class="heart-float" style="left:52%; top:30px; animation-delay:1.2s;">💛</div>
+      <div class="heart-float" style="left:48%; top:50px; animation-delay:2.4s;">💛</div>
+    </div>
+    <p class="friendship-text reveal">Through every up and down since the day we met, please know I will always be right here for you — as your person, your ride-or-die, no matter what. 👭💛✨</p>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" style="height:70px;">
+  <path d="M0,20 C 340,90 1080,0 1440,70 L1440,100 L0,100 Z" fill="rgba(243,203,214,0.28)"/>
+</svg>
+
+<!-- MEMORIES -->
+<section id="memories">
+  <div class="section-inner">
+    <span class="eyebrow reveal">little moments</span>
+    <h2 class="center-title reveal">Memories Worth Keeping</h2>
+    <div class="memories-grid">
+      <div class="memory-frame reveal-zoom">
+        <video src="sruthi_video.mp4" autoplay muted loop playsinline></video>
+        <div class="memory-caption">just her, being her ✨</div>
+      </div>
+      <div class="memory-frame reveal-zoom" style="transition-delay:.15s;">
+        <img src="photo_new.jpg" alt="Sruthiii and friend smiling together">
+        <div class="memory-caption">that day, that laugh 🤍</div>
+      </div>
+      <div class="memory-frame reveal-zoom" style="transition-delay:.3s;">
+        <img src="photo_bridge.jpg" alt="Sruthiii and friend on the glass sky bridge">
+        <div class="memory-caption">up in the clouds together ⛰️</div>
+      </div>
+    </div>
+    <p class="memories-text reveal">Just a couple of the moments I'm holding onto — here's to making so many more with you. 💫</p>
+  </div>
+</section>
+<section id="family">
+  <div class="section-inner" style="text-align:center;">
+    <span class="eyebrow reveal">what matters most</span>
+    <h2 class="center-title reveal">Take Care Of You, Too</h2>
+    <div class="family-flowers reveal-zoom">
+      <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="6" fill="#C9A25D"/><ellipse cx="20" cy="8" rx="6" ry="9" fill="#F8D2E2"/><ellipse cx="32" cy="20" rx="9" ry="6" fill="#F8D2E2"/><ellipse cx="20" cy="32" rx="6" ry="9" fill="#F8D2E2"/><ellipse cx="8" cy="20" rx="9" ry="6" fill="#F8D2E2"/></svg>
+      <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="6" fill="#D8709D"/><ellipse cx="20" cy="8" rx="6" ry="9" fill="#DCCFEC"/><ellipse cx="32" cy="20" rx="9" ry="6" fill="#DCCFEC"/><ellipse cx="20" cy="32" rx="6" ry="9" fill="#DCCFEC"/><ellipse cx="8" cy="20" rx="9" ry="6" fill="#DCCFEC"/></svg>
+      <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="6" fill="#C9A25D"/><ellipse cx="20" cy="8" rx="6" ry="9" fill="#E3C99B"/><ellipse cx="32" cy="20" rx="9" ry="6" fill="#E3C99B"/><ellipse cx="20" cy="32" rx="6" ry="9" fill="#E3C99B"/><ellipse cx="8" cy="20" rx="9" ry="6" fill="#E3C99B"/></svg>
+      <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="6" fill="#D8709D"/><ellipse cx="20" cy="8" rx="6" ry="9" fill="#F8D2E2"/><ellipse cx="32" cy="20" rx="9" ry="6" fill="#F8D2E2"/><ellipse cx="20" cy="32" rx="6" ry="9" fill="#F8D2E2"/><ellipse cx="8" cy="20" rx="9" ry="6" fill="#F8D2E2"/></svg>
+    </div>
+    <p class="family-text reveal">As you balance your career goals and all your hard work, please remember to take good care of yourself and take wonderful care of your Family too — I know how precious family is to you. 💞👩‍👧🏡</p>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" style="height:70px;">
+  <path d="M0,60 C 400,0 1040,100 1440,30 L1440,100 L0,100 Z" fill="rgba(255,255,255,0.55)"/>
+</svg>
+
+<!-- WISHES -->
+<section id="wishes">
+  <div class="section-inner">
+    <div class="glass-card wish-card reveal-zoom">
+      <span class="eyebrow" style="display:block; text-align:center;">the big day</span>
+      <h2 class="center-title">Wishing You The World</h2>
+      <p>I hope you have a fantastic birthday filled with all the happiness, laughter, and cake you deserve! 🎂🍓🥂</p>
+      <p>Here's to celebrating you today, and to all the success and great things coming your way this year! 🥳🎈✨</p>
+      <div class="candles-row">
+        <svg viewBox="0 0 20 60"><rect x="6" y="16" width="8" height="44" rx="3" fill="#F8D2E2"/><g class="flame" transform="translate(10,10)"><path d="M0 8 C -3 3, 2 -1, 0 -9 C -2 -1, 3 3, 0 8 Z" fill="#E7C77E"/></g></svg>
+        <svg viewBox="0 0 20 60"><rect x="6" y="16" width="8" height="44" rx="3" fill="#DCCFEC"/><g class="flame" transform="translate(10,10)"><path d="M0 8 C -3 3, 2 -1, 0 -9 C -2 -1, 3 3, 0 8 Z" fill="#E7C77E"/></g></svg>
+        <svg viewBox="0 0 20 60"><rect x="6" y="16" width="8" height="44" rx="3" fill="#E3C99B"/><g class="flame" transform="translate(10,10)"><path d="M0 8 C -3 3, 2 -1, 0 -9 C -2 -1, 3 3, 0 8 Z" fill="#E7C77E"/></g></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section id="final">
+  <p class="final-message reveal-zoom">"May your smile shine brighter every single year, and may you always know how loved you are.<br>Happy Birthday, my sweetest friend <span class="script" style="color:var(--rose-gold-deep);">Sruthiii</span>. 🌸💖✨"</p>
+  <div class="bouquet-wrap reveal-zoom">
+    <svg viewBox="0 0 220 220">
+      <path d="M110 220 L110 130" stroke="#7A9E6B" stroke-width="4"/>
+      <path d="M110 220 L95 140" stroke="#7A9E6B" stroke-width="3"/>
+      <path d="M110 220 L125 140" stroke="#7A9E6B" stroke-width="3"/>
+      <g transform="translate(80,80)"><circle r="8" fill="#C9A25D"/><ellipse cx="0" cy="-14" rx="7" ry="11" fill="#F8D2E2"/><ellipse cx="12" cy="0" rx="11" ry="7" fill="#F8D2E2"/><ellipse cx="0" cy="14" rx="7" ry="11" fill="#F8D2E2"/><ellipse cx="-12" cy="0" rx="11" ry="7" fill="#F8D2E2"/></g>
+      <g transform="translate(120,70)"><circle r="9" fill="#D8709D"/><ellipse cx="0" cy="-16" rx="8" ry="12" fill="#DCCFEC"/><ellipse cx="13" cy="0" rx="12" ry="8" fill="#DCCFEC"/><ellipse cx="0" cy="16" rx="8" ry="12" fill="#DCCFEC"/><ellipse cx="-13" cy="0" rx="12" ry="8" fill="#DCCFEC"/></g>
+      <g transform="translate(105,110)"><circle r="7" fill="#C9A25D"/><ellipse cx="0" cy="-12" rx="6" ry="10" fill="#E3C99B"/><ellipse cx="10" cy="0" rx="10" ry="6" fill="#E3C99B"/><ellipse cx="0" cy="12" rx="6" ry="10" fill="#E3C99B"/><ellipse cx="-10" cy="0" rx="10" ry="6" fill="#E3C99B"/></g>
+    </svg>
+  </div>
+</section>
+
+<footer>
+  <p>Made with so much love, for the sweetest friend I know.</p>
+  <span class="script">— always your person 💖</span>
+</footer>
+
+<audio id="bgm" loop preload="none">
+  <source src="chiru_clip.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* ---------------- LOADER ---------------- */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 900);
+});
+
+/* ---------------- SCROLL PROGRESS + NAV HIDE ---------------- */
+const progressBar = document.getElementById('scroll-progress');
+const nav = document.getElementById('mainnav');
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const scrollPct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  progressBar.style.width = scrollPct + '%';
+
+  const cur = h.scrollTop;
+  if (cur > lastScroll && cur > 140) nav.classList.add('nav-hide');
+  else nav.classList.remove('nav-hide');
+  lastScroll = cur;
+}, { passive:true });
+
+/* ---------------- INTERSECTION OBSERVER REVEALS ---------------- */
+const revealEls = document.querySelectorAll('.reveal, .reveal-zoom, .reveal-side-l, .reveal-side-r, .growth-line, .bloom-badge');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('in-view');
+  });
+}, { threshold: 0.2 });
+revealEls.forEach(el => io.observe(el));
+
+/* ---------------- CURSOR GLOW ---------------- */
+const cursorGlow = document.getElementById('cursor-glow');
+window.addEventListener('mousemove', (e) => {
+  cursorGlow.style.left = e.clientX + 'px';
+  cursorGlow.style.top = e.clientY + 'px';
+});
+
+/* ---------------- AMBIENT CANVAS: stars + drifting petals ---------------- */
+const canvas = document.getElementById('ambient-canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = document.documentElement.scrollHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+const stars = Array.from({length: 70}, () => ({
+  x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.6+0.4,
+  s: Math.random()*0.4+0.1, a: Math.random()
+}));
+
+function drawAmbient(){
+  ctx.clearRect(0,0,W,H);
+  stars.forEach(st => {
+    st.a += 0.01 * st.s;
+    const op = (Math.sin(st.a)+1)/2 * 0.6 + 0.1;
+    ctx.beginPath();
+    ctx.fillStyle = `rgba(233,197,140,${op})`;
+    ctx.arc(st.x, st.y, st.r, 0, Math.PI*2);
+    ctx.fill();
+  });
+  requestAnimationFrame(drawAmbient);
+}
+drawAmbient();
+window.addEventListener('scroll', () => { resize(); }, { passive:true });
+
+/* ---------------- FLOATING PETALS (mouse follow + ambient) ---------------- */
+const petalLayer = document.getElementById('petal-layer');
+const petalEmojis = ['🌸','🌷','✨'];
+let lastPetalTime = 0;
+function spawnPetal(x, y, ambient=false){
+  const el = document.createElement('div');
+  el.textContent = petalEmojis[Math.floor(Math.random()*petalEmojis.length)];
+  el.style.position='absolute';
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+  el.style.fontSize = (ambient ? (10+Math.random()*10) : (14+Math.random()*10)) + 'px';
+  el.style.opacity = 0.85;
+  el.style.pointerEvents='none';
+  el.style.transition = 'transform 3.5s ease-out, opacity 3.5s ease-out';
+  petalLayer.appendChild(el);
+  requestAnimationFrame(() => {
+    const dx = (Math.random()-0.5)*120;
+    const dy = 140 + Math.random()*160;
+    const rot = (Math.random()-0.5)*180;
+    el.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg)`;
+    el.style.opacity = 0;
+  });
+  setTimeout(() => el.remove(), 3600);
+}
+window.addEventListener('mousemove', (e) => {
+  const now = Date.now();
+  if (now - lastPetalTime > 120) {
+    lastPetalTime = now;
+    spawnPetal(e.clientX, e.clientY);
+  }
+});
+window.addEventListener('touchmove', (e) => {
+  const now = Date.now();
+  if (now - lastPetalTime > 160 && e.touches && e.touches[0]) {
+    lastPetalTime = now;
+    spawnPetal(e.touches[0].clientX, e.touches[0].clientY);
+  }
+}, { passive:true });
+setInterval(() => { spawnPetal(Math.random()*window.innerWidth, -20, true); }, 1400);
+
+/* ---------------- HEART BURST ON CLICK ---------------- */
+window.addEventListener('click', (e) => {
+  for (let i=0;i<6;i++){
+    const h = document.createElement('div');
+    h.className='burst-item';
+    h.textContent='💗';
+    h.style.left = e.clientX+'px';
+    h.style.top = e.clientY+'px';
+    h.style.fontSize = (10+Math.random()*12)+'px';
+    h.style.transition = 'transform 1s ease-out, opacity 1s ease-out';
+    document.body.appendChild(h);
+    requestAnimationFrame(() => {
+      const ang = Math.random()*Math.PI*2;
+      const dist = 40+Math.random()*60;
+      h.style.transform = `translate(${Math.cos(ang)*dist}px, ${Math.sin(ang)*dist - 30}px)`;
+      h.style.opacity = '0';
+    });
+    setTimeout(() => h.remove(), 1100);
+  }
+});
+
+/* ---------------- SMALL LOCALIZED SPARKLE BURST (contained near the element that triggered it) ---------------- */
+function sparkleBurst(x, y){
+  const colors = ['#F8D2E2','#C9A25D','#DCCFEC','#E3C99B','#EBA4C3'];
+  for (let i=0;i<10;i++){
+    const c = document.createElement('div');
+    c.className='burst-item';
+    c.style.width='5px'; c.style.height='5px';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.left = x+'px'; c.style.top = y+'px';
+    c.style.borderRadius = Math.random()>0.5 ? '50%' : '2px';
+    c.style.transition = 'transform 1s cubic-bezier(.22,1,.36,1), opacity 1s ease';
+    document.body.appendChild(c);
+    requestAnimationFrame(() => {
+      const ang = Math.random()*Math.PI*2;
+      const dist = 18+Math.random()*34;
+      c.style.transform = `translate(${Math.cos(ang)*dist}px, ${Math.sin(ang)*dist}px) rotate(${Math.random()*360}deg)`;
+      c.style.opacity='0';
+    });
+    setTimeout(() => c.remove(), 1050);
+  }
+  for (let i=0;i<3;i++){
+    const h = document.createElement('div');
+    h.className='burst-item';
+    h.textContent='✨';
+    h.style.left = x+'px'; h.style.top = y+'px';
+    h.style.fontSize = (11+Math.random()*8)+'px';
+    h.style.transition = 'transform 1.1s ease-out, opacity 1.1s ease-out';
+    document.body.appendChild(h);
+    requestAnimationFrame(() => {
+      const dx = (Math.random()-0.5)*50;
+      h.style.transform = `translate(${dx}px, ${-40-Math.random()*30}px)`;
+      h.style.opacity='0';
+    });
+    setTimeout(() => h.remove(), 1200);
+  }
+}
+
+/* ---------------- THE GIFT BOX: RIBBON UNTIES, LID OPENS, MESSAGES REVEAL ---------------- */
+const giftWrap = document.getElementById('giftBox');
+const giftLid = document.getElementById('giftLid');
+const giftGlow = document.getElementById('giftGlow');
+const giftMsg1 = document.getElementById('giftMsg1');
+const giftMsg2 = document.getElementById('giftMsg2');
+let giftIsOpen = false;
+
+function openGift(){
+  if (giftIsOpen) return;
+  giftIsOpen = true;
+  giftWrap.classList.remove('idle-bounce');
+  giftWrap.classList.add('opened');
+
+  // stage 1: the ribbon unties itself
+  giftWrap.classList.add('gift-untied');
+
+  // stage 2: the lid lifts open on a slight delay
+  setTimeout(() => {
+    giftLid.classList.add('open');
+  }, 450);
+
+  // stage 3: a soft golden glow rises from inside, with a small contained sparkle
+  setTimeout(() => {
+    giftGlow.classList.add('show');
+    const svgEl = giftWrap.querySelector('svg');
+    const r = svgEl.getBoundingClientRect();
+    sparkleBurst(r.left + r.width*0.5, r.top + r.height*0.5);
+  }, 900);
+
+  // stage 4 & 5: the two messages reveal in sequence inside the box
+  setTimeout(() => { giftMsg1.classList.add('show'); }, 1300);
+  setTimeout(() => { giftMsg2.classList.add('show'); }, 2000);
+}
+
+giftWrap.addEventListener('click', openGift);
+giftWrap.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' '){
+    e.preventDefault();
+    openGift();
+  }
+});
+
+// reset the gift box once she scrolls back up to the hero, so it can be opened again
+const heroObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && giftIsOpen){
+      giftIsOpen = false;
+      giftWrap.classList.remove('gift-untied','opened');
+      giftWrap.classList.add('idle-bounce');
+      giftLid.classList.remove('open');
+      giftGlow.classList.remove('show');
+      giftMsg1.classList.remove('show');
+      giftMsg2.classList.remove('show');
+    }
+  });
+}, { threshold: 0.6 });
+heroObserver.observe(document.getElementById('hero'));
+
+/* ---------------- CELEBRATE BUTTON: SIMPLY SCROLLS TO THE STORY ---------------- */
+document.getElementById('celebrateBtn').addEventListener('click', () => {
+  document.getElementById('story').scrollIntoView({ behavior:'smooth' });
+});
+
+/* ---------------- TYPING ANIMATION FOR TITLES ---------------- */
+const typeTargets = document.querySelectorAll('.center-title');
+const typeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.typed){
+      entry.target.dataset.typed = 'true';
+      const text = entry.target.textContent;
+      entry.target.textContent = '';
+      entry.target.classList.add('typing');
+      let i = 0;
+      const interval = setInterval(() => {
+        entry.target.textContent += text[i];
+        i++;
+        if (i >= text.length){
+          clearInterval(interval);
+          entry.target.classList.remove('typing');
+        }
+      }, 35);
+      typeObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+typeTargets.forEach(el => typeObserver.observe(el));
+
+/* ---------------- MUSIC TOGGLE ---------------- */
+const bgm = document.getElementById('bgm');
+const musicBtn = document.getElementById('music-toggle');
+const musicIcon = document.getElementById('music-icon-off');
+const songName = document.getElementById('songName');
+let playing = false;
+musicBtn.addEventListener('click', () => {
+  if (!playing){
+    bgm.volume = 0.35;
+    bgm.play().catch(()=>{});
+    musicIcon.innerHTML = '<path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/><path d="M19 12a7 7 0 01-1 3.5l1.5 1a9 9 0 001-4.5A9 9 0 0018.9 6l-1.5 1A7 7 0 0119 12z" opacity="0.5"/>';
+    playing = true;
+    songName.classList.add('show');
+  } else {
+    bgm.pause();
+    musicIcon.innerHTML = '<path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>';
+    playing = false;
+    songName.classList.remove('show');
+  }
+});
+
+/* smooth-scroll for nav anchors already handled by CSS scroll-behavior */
+</script>
+
+</body>
+</html>
