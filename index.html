@@ -65,26 +65,26 @@ body{
 }
 
 .lock-card{
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(201, 162, 93, 0.35);
-  padding: 50px 40px;
+  padding: 50px 36px;
   border-radius: 32px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: var(--shadow-soft);
   max-width: 580px;
-  width: 90%;
+  width: 92%;
 }
 
 .lock-title{
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-size: clamp(2rem, 5vw, 2.7rem);
   font-style: italic;
   color: var(--rose-gold-deep);
-  margin: 12px 0 6px;
+  margin: 10px 0 6px;
 }
 .lock-subtitle{
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--plum-soft);
@@ -99,7 +99,7 @@ body{
 }
 
 .timer-box{
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.9);
   border: 1px solid rgba(143, 191, 131, 0.4);
   border-radius: 18px;
   padding: 16px 12px;
@@ -277,7 +277,6 @@ section{
 .reveal-side-r{ opacity:0; transform: translateX(60px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
 .reveal-side-r.in-view{ opacity:1; transform:none; }
 
-/* wave divider */
 .wave{ display:block; width:100%; position:relative; z-index:3; margin-top:-2px; }
 
 /* ---------- HERO ---------- */
@@ -917,10 +916,10 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
 function getNextBirthdayDate() {
   const now = new Date();
   let targetYear = now.getFullYear();
-  // Month 7 is August (0-indexed: 0=Jan ... 7=Aug)
+  // Month 7 is August (0-indexed: 0=Jan, 1=Feb ... 7=Aug)
   let bday = new Date(targetYear, 7, 25, 0, 0, 0);
 
-  // If Aug 25 of this year has already passed, set to next year's Aug 25
+  // If Aug 25 of current year has completely passed (by more than 1 day), roll to next year
   if (now.getTime() > bday.getTime() + 86400000) {
     bday = new Date(targetYear + 1, 7, 25, 0, 0, 0);
   }
@@ -961,7 +960,7 @@ function updateCountdown() {
 }
 
 updateCountdown();
-const timerInterval = setInterval(updateCountdown, 1000);
+setInterval(updateCountdown, 1000);
 
 /* ---------------- LOADER ---------------- */
 window.addEventListener('load', () => {
@@ -1001,7 +1000,7 @@ window.addEventListener('mousemove', (e) => {
   cursorGlow.style.top = e.clientY + 'px';
 });
 
-/* ---------------- AMBIENT CANVAS: stars + drifting petals ---------------- */
+/* ---------------- AMBIENT CANVAS ---------------- */
 const canvas = document.getElementById('ambient-canvas');
 const ctx = canvas.getContext('2d');
 let W, H;
