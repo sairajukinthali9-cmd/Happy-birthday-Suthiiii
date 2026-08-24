@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday, Sruthiii🌸</title>
-<link rel="preconnect" hreff="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -40,8 +40,6 @@ body{
   cursor:none;
 }
 
-body.locked{ overflow:hidden; height:100vh; }
-
 @media (max-width: 900px){
   body{cursor:auto;}
 }
@@ -50,6 +48,91 @@ body.locked{ overflow:hidden; height:100vh; }
 
 .script{ font-family:'Alex Brush', cursive; }
 .display{ font-family:'Playfair Display', serif; }
+
+/* ---------- COUNTDOWN LOCK OVERLAY ---------- */
+#countdown-lock{
+  position:fixed; inset:0; z-index:10000;
+  background: radial-gradient(circle at center, var(--ivory) 0%, var(--ivory-deep) 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:20px;
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease), visibility 1.2s var(--ease);
+}
+#countdown-lock.unlocked{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform: scale(1.05);
+}
+
+.lock-card{
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(201, 162, 93, 0.35);
+  padding: 50px 40px;
+  border-radius: 32px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-soft);
+  max-width: 580px;
+  width: 90%;
+}
+
+.lock-title{
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-style: italic;
+  color: var(--rose-gold-deep);
+  margin: 12px 0 6px;
+}
+.lock-subtitle{
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--plum-soft);
+  margin-bottom: 35px;
+}
+
+.timer-grid{
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 25px;
+}
+
+.timer-box{
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(143, 191, 131, 0.4);
+  border-radius: 18px;
+  padding: 16px 12px;
+  min-width: 72px;
+  box-shadow: var(--shadow-card);
+}
+.timer-num{
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 700;
+  color: var(--plum);
+  line-height: 1;
+}
+.timer-label{
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rose-gold-deep);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.lock-note{
+  font-size: 0.9rem;
+  color: var(--plum-soft);
+  font-style: italic;
+}
+
+@media (max-width: 480px){
+  .timer-grid{ gap: 8px; }
+  .timer-box{ min-width: 58px; padding: 12px 6px; }
+  .lock-card{ padding: 36px 20px; }
+}
 
 /* ---------- LOADER ---------- */
 #loader{
@@ -223,7 +306,7 @@ section{
   color: var(--plum-soft); max-width:520px; z-index:2; position:relative;
 }
 
-/* ---------- GIFT BOX (signature hero interaction) ---------- */
+/* ---------- GIFT BOX ---------- */
 .gift-wrap{ margin: 46px 0 30px; position:relative; z-index:2; cursor:pointer; }
 .gift-wrap svg{ width:150px; height:auto; filter: drop-shadow(0 20px 30px rgba(169,106,84,0.25)); overflow:visible; }
 
@@ -287,7 +370,8 @@ section{
   .gift-wrap{ transform: scale(0.7); }
 }
 
-.flame{ animation: flicker 1.6s ease-in-out infinite; transform-origin:bottom center; transition: opacity .5s ease, transform .5s ease; }@keyframes flicker{
+.flame{ animation: flicker 1.6s ease-in-out infinite; transform-origin:bottom center; transition: opacity .5s ease, transform .5s ease; }
+@keyframes flicker{
   0%,100%{ transform:scaleY(1) rotate(-2deg); }
   50%{ transform:scaleY(1.15) rotate(2deg); }
 }
@@ -358,7 +442,7 @@ section{
 .icon-card svg{ width:64px; height:64px; margin-bottom:22px; }
 .icon-card p{ font-size:1rem; font-weight:300; line-height:1.75; color:var(--plum-soft); }
 
-/* ---------- DREAMS / BANKING ---------- */
+/* ---------- DREAMS ---------- */
 #dreams{
   background: linear-gradient(180deg, rgba(227,201,155,0.12), rgba(220,207,236,0.18));
   position:relative;
@@ -476,71 +560,37 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration: 0.001ms !important; animation-iteration-count:1 !important; transition-duration: 0.001ms !important; scroll-behavior:auto !important; }
 }
-
-/* ---------- BIRTHDAY LOCK / COUNTDOWN ---------- */
-#birthday-lock{
-  position:fixed; inset:0; z-index:99999;
-  background: linear-gradient(160deg, var(--ivory) 0%, var(--blush-soft) 60%, var(--lavender) 100%);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; padding:8vw;
-  transition: opacity 1s var(--ease), visibility 1s var(--ease);
-}
-#birthday-lock.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
-.lock-flower{ width:70px; height:70px; margin-bottom:20px; }
-.lock-flower ellipse{ fill: var(--rose-gold); opacity:0.85; }
-.lock-eyebrow{
-  font-size:0.75rem; letter-spacing:0.3em; text-transform:uppercase;
-  color:var(--rose-gold-deep); opacity:0.85; margin-bottom:16px;
-}
-.lock-title{
-  font-family:'Playfair Display', serif; font-style:italic; font-weight:600;
-  font-size: clamp(1.6rem, 5vw, 2.6rem); color:var(--plum); max-width:600px; line-height:1.4;
-}
-.lock-sub{
-  margin-top:14px; font-size:1rem; font-weight:300; color:var(--plum-soft); max-width:440px;
-}
-.lock-countdown{
-  display:flex; gap:18px; margin-top:38px;
-}
-.lock-unit{
-  display:flex; flex-direction:column; align-items:center;
-  background: rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.7);
-  border-radius:18px; padding:16px 14px; min-width:64px;
-  box-shadow: var(--shadow-card);
-}
-.lock-unit .num{
-  font-family:'Playfair Display', serif; font-size:1.7rem; font-weight:600; color:var(--rose-gold-deep);
-}
-.lock-unit .label{
-  font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--plum-soft); margin-top:4px;
-}
-@media (max-width:480px){
-  .lock-countdown{ gap:10px; }
-  .lock-unit{ min-width:52px; padding:12px 10px; }
-  .lock-unit .num{ font-size:1.3rem; }
-}
 </style>
 </head>
 <body>
 
-<div id="birthday-lock">
-  <svg class="lock-flower" viewBox="0 0 120 120">
-    <ellipse cx="60" cy="30" rx="14" ry="26"/>
-    <ellipse cx="60" cy="30" rx="14" ry="26" transform="rotate(60 60 60)"/>
-    <ellipse cx="60" cy="30" rx="14" ry="26" transform="rotate(120 60 60)"/>
-    <ellipse cx="60" cy="30" rx="14" ry="26" transform="rotate(180 60 60)"/>
-    <ellipse cx="60" cy="30" rx="14" ry="26" transform="rotate(240 60 60)"/>
-    <ellipse cx="60" cy="30" rx="14" ry="26" transform="rotate(300 60 60)"/>
-    <circle cx="60" cy="60" r="10" fill="#C9A25D"/>
-  </svg>
-  <span class="lock-eyebrow">something's coming</span>
-  <h1 class="lock-title">A little surprise is waiting for you, Sruthiii 🌸</h1>
-  <p class="lock-sub">Come back on your birthday to open it.</p>
-  <div class="lock-countdown" id="lockCountdown">
-    <div class="lock-unit"><span class="num" id="cdDays">--</span><span class="label">days</span></div>
-    <div class="lock-unit"><span class="num" id="cdHours">--</span><span class="label">hrs</span></div>
-    <div class="lock-unit"><span class="num" id="cdMins">--</span><span class="label">min</span></div>
-    <div class="lock-unit"><span class="num" id="cdSecs">--</span><span class="label">sec</span></div>
+<!-- BIRTHDAY COUNTDOWN LOCK SCREEN -->
+<div id="countdown-lock">
+  <div class="lock-card">
+    <span class="eyebrow">Something Special Awaits</span>
+    <h1 class="lock-title">Counting Down To Sruthiii's Birthday 🌸</h1>
+    <div class="lock-subtitle">Unlocking August 25 at 12:00 AM</div>
+    
+    <div class="timer-grid">
+      <div class="timer-box">
+        <div class="timer-num" id="t-days">00</div>
+        <div class="timer-label">Days</div>
+      </div>
+      <div class="timer-box">
+        <div class="timer-num" id="t-hours">00</div>
+        <div class="timer-label">Hours</div>
+      </div>
+      <div class="timer-box">
+        <div class="timer-num" id="t-mins">00</div>
+        <div class="timer-label">Mins</div>
+      </div>
+      <div class="timer-box">
+        <div class="timer-num" id="t-secs">00</div>
+        <div class="timer-label">Secs</div>
+      </div>
+    </div>
+    
+    <p class="lock-note">Please check back when the clock strikes midnight! ✨</p>
   </div>
 </div>
 
@@ -624,18 +674,13 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
       </defs>
 
       <ellipse cx="100" cy="178" rx="70" ry="10" fill="#EBA4C3" opacity="0.2"/>
-
-      <!-- soft golden glow, hidden until the gift is opened -->
       <circle id="giftGlow" class="gift-glow" cx="100" cy="118" r="58" fill="url(#giftGlowGrad)"/>
 
-      <!-- box base -->
       <rect x="45" y="110" width="110" height="70" rx="8" fill="url(#boxBody)"/>
       <rect x="45" y="110" width="110" height="70" rx="8" fill="none" stroke="#EBA4C3" stroke-width="1" opacity="0.4"/>
 
-      <!-- vertical ribbon on the base -->
       <rect class="gift-ribbon-v" x="92" y="110" width="16" height="70" fill="#C9A25D"/>
 
-      <!-- lid, rotates open on click -->
       <g class="gift-lid" id="giftLid">
         <rect x="38" y="92" width="124" height="24" rx="8" fill="#EBA4C3"/>
         <rect class="gift-ribbon-h" x="38" y="98" width="124" height="12" fill="#C9A25D"/>
@@ -729,7 +774,6 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
       <svg viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet">
         <path id="growthPath" class="growth-line" d="M20 220 C 150 220, 180 160, 260 150 S 400 90, 480 100 S 620 40, 700 45 S 830 15, 880 20"
           stroke="#C9A25D" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <!-- bloom badges along the path -->
         <g class="bloom-badge" style="transition-delay:.3s;" transform="translate(260,150)">
           <circle r="20" fill="#F8D2E2"/>
           <circle r="20" fill="none" stroke="#C9A25D" stroke-width="1.5" opacity="0.6"/>
@@ -807,6 +851,8 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
     <p class="memories-text reveal">Just a couple of the moments I'm holding onto — here's to making so many more with you. 💫</p>
   </div>
 </section>
+
+<!-- FAMILY -->
 <section id="family">
   <div class="section-inner" style="text-align:center;">
     <span class="eyebrow reveal">what matters most</span>
@@ -867,6 +913,56 @@ footer .script{ color:var(--rose-gold-deep); font-size:1.3rem; display:block; ma
 </audio>
 
 <script>
+/* ---------------- BIRTHDAY TIMER & AUTO-UNLOCK LOGIC ---------------- */
+function getNextBirthdayDate() {
+  const now = new Date();
+  let targetYear = now.getFullYear();
+  // Month 7 is August (0-indexed: 0=Jan ... 7=Aug)
+  let bday = new Date(targetYear, 7, 25, 0, 0, 0);
+
+  // If Aug 25 of this year has already passed, set to next year's Aug 25
+  if (now.getTime() > bday.getTime() + 86400000) {
+    bday = new Date(targetYear + 1, 7, 25, 0, 0, 0);
+  }
+  return bday;
+}
+
+const targetBirthday = getNextBirthdayDate();
+const lockOverlay = document.getElementById('countdown-lock');
+const elDays = document.getElementById('t-days');
+const elHours = document.getElementById('t-hours');
+const elMins = document.getElementById('t-mins');
+const elSecs = document.getElementById('t-secs');
+
+let timerUnlocked = false;
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const diff = targetBirthday.getTime() - now;
+
+  if (diff <= 0) {
+    if (!timerUnlocked) {
+      timerUnlocked = true;
+      lockOverlay.classList.add('unlocked');
+      sparkleBurst(window.innerWidth / 2, window.innerHeight / 2);
+    }
+    return;
+  }
+
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+  elDays.textContent = String(d).padStart(2, '0');
+  elHours.textContent = String(h).padStart(2, '0');
+  elMins.textContent = String(m).padStart(2, '0');
+  elSecs.textContent = String(s).padStart(2, '0');
+}
+
+updateCountdown();
+const timerInterval = setInterval(updateCountdown, 1000);
+
 /* ---------------- LOADER ---------------- */
 window.addEventListener('load', () => {
   setTimeout(() => {
@@ -933,7 +1029,7 @@ function drawAmbient(){
 drawAmbient();
 window.addEventListener('scroll', () => { resize(); }, { passive:true });
 
-/* ---------------- FLOATING PETALS (mouse follow + ambient) ---------------- */
+/* ---------------- FLOATING PETALS ---------------- */
 const petalLayer = document.getElementById('petal-layer');
 const petalEmojis = ['🌸','🌷','✨'];
 let lastPetalTime = 0;
@@ -994,7 +1090,7 @@ window.addEventListener('click', (e) => {
   }
 });
 
-/* ---------------- SMALL LOCALIZED SPARKLE BURST (contained near the element that triggered it) ---------------- */
+/* ---------------- SPARKLE BURST ---------------- */
 function sparkleBurst(x, y){
   const colors = ['#F8D2E2','#C9A25D','#DCCFEC','#E3C99B','#EBA4C3'];
   for (let i=0;i<10;i++){
@@ -1031,7 +1127,7 @@ function sparkleBurst(x, y){
   }
 }
 
-/* ---------------- THE GIFT BOX: RIBBON UNTIES, LID OPENS, MESSAGES REVEAL ---------------- */
+/* ---------------- GIFT BOX LOGIC ---------------- */
 const giftWrap = document.getElementById('giftBox');
 const giftLid = document.getElementById('giftLid');
 const giftGlow = document.getElementById('giftGlow');
@@ -1044,16 +1140,9 @@ function openGift(){
   giftIsOpen = true;
   giftWrap.classList.remove('idle-bounce');
   giftWrap.classList.add('opened');
-
-  // stage 1: the ribbon unties itself
   giftWrap.classList.add('gift-untied');
 
-  // stage 2: the lid lifts open on a slight delay
-  setTimeout(() => {
-    giftLid.classList.add('open');
-  }, 450);
-
-  // stage 3: a soft golden glow rises from inside, with a small contained sparkle
+  setTimeout(() => { giftLid.classList.add('open'); }, 450);
   setTimeout(() => {
     giftGlow.classList.add('show');
     const svgEl = giftWrap.querySelector('svg');
@@ -1061,7 +1150,6 @@ function openGift(){
     sparkleBurst(r.left + r.width*0.5, r.top + r.height*0.5);
   }, 900);
 
-  // stage 4 & 5: the two messages reveal in sequence inside the box
   setTimeout(() => { giftMsg1.classList.add('show'); }, 1300);
   setTimeout(() => { giftMsg2.classList.add('show'); }, 2000);
 }
@@ -1074,7 +1162,6 @@ giftWrap.addEventListener('keydown', (e) => {
   }
 });
 
-// reset the gift box once she scrolls back up to the hero, so it can be opened again
 const heroObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting && giftIsOpen){
@@ -1090,12 +1177,12 @@ const heroObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.6 });
 heroObserver.observe(document.getElementById('hero'));
 
-/* ---------------- CELEBRATE BUTTON: SIMPLY SCROLLS TO THE STORY ---------------- */
+/* ---------------- CELEBRATE BUTTON ---------------- */
 document.getElementById('celebrateBtn').addEventListener('click', () => {
   document.getElementById('story').scrollIntoView({ behavior:'smooth' });
 });
 
-/* ---------------- TYPING ANIMATION FOR TITLES ---------------- */
+/* ---------------- TYPING ANIMATION ---------------- */
 const typeTargets = document.querySelectorAll('.center-title');
 const typeObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -1139,8 +1226,6 @@ musicBtn.addEventListener('click', () => {
     songName.classList.remove('show');
   }
 });
-
-/* smooth-scroll for nav anchors already handled by CSS scroll-behavior */
 </script>
 
 </body>
